@@ -7,7 +7,7 @@ blink.bin: blink.c isr_vectors.s
 	$(CROSS-COMPILER)objcopy -O binary blink.elf blink.bin
 
 flash:
-	st-flash --reset write blink.bin 0x8000000
+	sudo st-flash --reset write blink.bin 0x8000000
 
 clean:
 	rm -f *.o *.elf *.bin

@@ -8,8 +8,8 @@
 
 #include <stdint.h>
 
-#define SET_BIT(addr, bit) *((volatile uint32_t *)(addr)) |= ((uint32_t)1 << bit)
-#define CLEAR_BIT(addr, bit) *((volatile uint32_t *)(addr)) &= ~((uint32_t)1 << bit)
+#define SET_BIT(addr, bit) *((uint32_t *)(addr)) |= ((uint32_t)1 << bit)
+#define CLEAR_BIT(addr, bit) *((uint32_t *)(addr)) &= ~((uint32_t)1 << bit)
 #define READ_BIT(addr,bit) (((uint32_t)1 == (*(uint32_t *)(addr) & (uint32_t)1 << bit))?1:0)
 //#define READ_BIT(addr,bit) *(volatile uint32_t *)(addr) &(uint32_t)1 << bit
 

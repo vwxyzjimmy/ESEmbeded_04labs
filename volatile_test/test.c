@@ -3,7 +3,7 @@
 int test_volatile(void)
 {
 	volatile uint32_t *reg_a = 0x40023800;
-
+	//uint32_t *reg_a = 0x40023800;
 	uint32_t val1;
 	uint32_t val2;
 

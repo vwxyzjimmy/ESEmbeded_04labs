@@ -10,7 +10,8 @@
 
 #define SET_BIT(addr, bit) *((volatile uint32_t *)(addr)) |= ((uint32_t)1 << bit)
 #define CLEAR_BIT(addr, bit) *((volatile uint32_t *)(addr)) &= ~((uint32_t)1 << bit)
-#define READ_BIT(addr,bit) (((uint32_t)1 == (*(volatile unsigned int *)(addr)&((uint32_t)1 << bit)))?(uint32_t)1:(uint32_t)0)
+#define READ_BIT(addr,bit) (((uint32_t)1 == (*(uint32_t *)(addr) & (uint32_t)1 << bit))?1:0)
+//#define READ_BIT(addr,bit) *(volatile uint32_t *)(addr) &(uint32_t)1 << bit
 
 //RCC
 #define RCC_BASE 0x40023800
@@ -72,8 +73,8 @@
 #define GPIOA_BASE 0x40020000
 
 //#define GPIOx_MODER_OFFSET 0x00
-#define MODER0_1_BIT 1
-#define MODER0_0_BIT 0
+#define MODER0_1_BIT 0
+#define MODER0_0_BIT 1
 
 //#define GPIOx_PUPDR_OFFSET 0x0C
 #define PUPDR0_1_BIT 1
@@ -115,8 +116,8 @@ void blink(void)
 
 
 	//OSPEEDR15 = 00 => Low speed
-	CLEAR_BIT(GPIOD_BASE + GPIOx_OSPEEDR_OFFSET, OSPEEDR15_1_BIT);
-	CLEAR_BIT(GPIOD_BASE + GPIOx_OSPEEDR_OFFSET, OSPEEDR15_0_BIT);
+	SET_BIT(GPIOD_BASE + GPIOx_OSPEEDR_OFFSET, OSPEEDR15_1_BIT);
+	SET_BIT(GPIOD_BASE + GPIOx_OSPEEDR_OFFSET, OSPEEDR15_0_BIT);
 	CLEAR_BIT(GPIOD_BASE + GPIOx_OSPEEDR_OFFSET, OSPEEDR14_1_BIT);
 	CLEAR_BIT(GPIOD_BASE + GPIOx_OSPEEDR_OFFSET, OSPEEDR14_0_BIT);
 	CLEAR_BIT(GPIOD_BASE + GPIOx_OSPEEDR_OFFSET, OSPEEDR13_1_BIT);
@@ -146,6 +147,7 @@ void blink(void)
 	unsigned int choose[] = {BS15_BIT, BS14_BIT, BS13_BIT, BS12_BIT};
 	unsigned int i, light_count = 0;
 	while(!READ_BIT(GPIOA_BASE + GPIOx_IDR_OFFSET, IDR_0_BIT));
+	
 	while (1)
 	{
 		if( READ_BIT(GPIOA_BASE + GPIOx_IDR_OFFSET, IDR_0_BIT)){

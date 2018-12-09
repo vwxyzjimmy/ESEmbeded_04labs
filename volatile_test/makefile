@@ -1,5 +1,6 @@
 CROSS-COMPILER = arm-none-eabi-
 
+
 all: test.elf
 
 test.elf: test.c

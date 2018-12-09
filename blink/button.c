@@ -145,9 +145,11 @@ void blink(void)
 
 	unsigned int choose[] = {BS15_BIT, BS14_BIT, BS13_BIT, BS12_BIT};
 	unsigned int i, light_count = 0;
+	while(!READ_BIT(GPIOA_BASE + GPIOx_IDR_OFFSET, IDR_0_BIT));
 	while (1)
 	{
 		if( READ_BIT(GPIOA_BASE + GPIOx_IDR_OFFSET, IDR_0_BIT)){
+			while(READ_BIT(GPIOA_BASE + GPIOx_IDR_OFFSET, IDR_0_BIT));
 			light_count++;
 			if (light_count > 3)
 				light_count = 0;
